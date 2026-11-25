@@ -75,7 +75,7 @@ class AssistenteFinanceiro:
         except openai.AuthenticationError as exc:
             raise ErroAssistente("Chave da OpenAI inválida.") from exc
         except openai.RateLimitError as exc:
-            raise ErroAssistente("Limite de uso da OpenAI atingido.") from exc
+            raise ErroAssistente("Limite de uso ou crédito da OpenAI esgotado.") from exc
         except openai.APITimeoutError as exc:
             raise ErroAssistente("A OpenAI demorou demais para responder.") from exc
         except openai.APIError as exc:
