@@ -43,6 +43,7 @@ def main() -> None:
         linhas += ["```\n", f"**Resposta:** {texto}\n"]
 
     linhas.insert(1, f"{aprovados} de {len(CASOS)} casos OK. Data usada como hoje: {HOJE:%d/%m/%Y}.\n")
+    Path("docs").mkdir(exist_ok=True)
     Path("docs/resultados.md").write_text("\n".join(linhas), encoding="utf-8")
 
 
