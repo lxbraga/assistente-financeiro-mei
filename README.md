@@ -89,4 +89,4 @@ O raciocínio da última rodada está em [docs/resultados.md](docs/resultados.md
 
 O agente **facilita** ao reunir fontes e cálculos em uma conversa e **possibilita** perguntas que combinam etapas, escolhendo as ferramentas e a ordem. O cálculo em código evita erros aritméticos do LLM, e o raciocínio visível permite conferir a resposta.
 
-**Limitações:** feriados locais não entram, as APIs públicas podem falhar o LLM pode omitir um aviso da ferramenta e a trava cobre só valores em R$ (não datas e percentuais). Não substitui um contador.
+**Limitações:** feriados locais não entram, as APIs públicas podem falhar, o LLM pode omitir um aviso da ferramenta e a trava cobre só valores em R$ (não datas e percentuais). Não substitui um contador.
