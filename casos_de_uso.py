@@ -12,15 +12,16 @@ CASOS = [
     ("1. Situação de CNPJ", "cnpj", "Qual a situação do CNPJ 00.000.000/0001-91?", ["ativa"]),
     ("2. Boleto atrasado", "boleto", "Um boleto de R$ 1.200 venceu em 03/11/2026. Quanto devo hoje?", ["1.232,80"]),
     ("3. Memória", "boleto", "E se eu pagar só na sexta?", ["1.233,60"]),
-    ("4. Correção pelo IPCA", "ipca", "Corrija R$ 5.000 pelo IPCA de janeiro a outubro de 2026.", ["5.204,84"]),
+    ("4. Memória com nova taxa", "boleto", "E se a multa for de 10%?", ["1.329,60"]),
+    ("5. Correção pelo IPCA", "ipca", "Corrija R$ 5.000 pelo IPCA de janeiro a outubro de 2026.", ["5.204,84"]),
     (
-        "5. Encadeamento",
+        "6. Encadeamento",
         "cadeia",
         "Emiti uma cobrança de R$ 1.000 em 30/10/2026 com prazo de 1 dia útil. Quanto o cliente deve se pagar hoje?",
         ["1.027,33"],  # vence em 03/11: 22 dias, multa 20,00 e juros 7,33
     ),
-    ("6. CNPJ inválido", "erro", "Consulte o CNPJ 11.111.111/1111-11.", ["inválido"]),
-    ("7. CNPJ não cadastrado", "erro2", "Consulte o CNPJ 99.999.999/0001-91.", ["não", "encontrado"]),
+    ("7. CNPJ inválido", "erro", "Consulte o CNPJ 11.111.111/1111-11.", ["inválido"]),
+    ("8. CNPJ não cadastrado", "erro2", "Consulte o CNPJ 99.999.999/0001-91.", ["não", "encontrado"]),
 ]
 
 

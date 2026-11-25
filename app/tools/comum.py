@@ -46,7 +46,7 @@ def ler_campos(texto: str, obrigatorios: list[str], opcionais: tuple = ()) -> di
     return campos
 
 
-def _ler_decimal(texto: str) -> Decimal:
+def ler_numero(texto: str) -> Decimal:
     numero = re.sub(r"[R$%\s]", "", texto)
     if "," in numero:  # formato brasileiro: 1.200,50
         numero = numero.replace(".", "").replace(",", ".")
@@ -62,14 +62,14 @@ def _ler_decimal(texto: str) -> Decimal:
 
 
 def ler_valor(texto: str) -> Decimal:
-    valor = _ler_decimal(texto)
+    valor = ler_numero(texto)
     if not 0 < valor <= 10**9:
         raise ToolException("O valor deve ser maior que zero e até 1 bilhão.")
     return valor
 
 
 def ler_percentual(texto: str) -> Decimal:
-    valor = _ler_decimal(texto)
+    valor = ler_numero(texto)
     if not 0 <= valor <= 100:
         raise ToolException("Percentual deve estar entre 0 e 100.")
     return valor

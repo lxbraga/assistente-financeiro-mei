@@ -108,3 +108,53 @@ def test_erros_da_openai(erro, mensagem):
 
     with pytest.raises(ErroAssistente, match=mensagem):
         AssistenteFinanceiro(LLMComErro(responses=["x"])).perguntar("x", "s1")
+
+
+def test_prompt_nao_expoe_parametro_interno():
+    assistente, llm = criar(FINAL + "ok")
+    assistente.perguntar("oi", "s1")
+    assert "entrada: str" not in llm.prompts[0]
+
+
+def test_passo_de_formato_invalido_e_legivel():
+    assistente, llm = criar("texto solto", FINAL + "ok")
+    passo = assistente.perguntar("x", "s1").passos[0]
+    assert passo.ferramenta == "(formato inválido)" and passo.pensamento == "texto solto"
+    assert "Final Answer:" in llm.prompts[1].split("Observation:")[-1]
+
+
+def test_memoria_preserva_formato_react():
+    assistente, llm = criar(FINAL + "resposta-1", FINAL + "b")
+    assistente.perguntar("a", "s1")
+    assistente.perguntar("b", "s1")
+    assert "Final Answer: resposta-1" in llm.prompts[1]
+
+
+def test_memoria_guarda_observacoes():
+    assistente, llm = criar(USAR_TOOL, FINAL + "R$ 1.232,80", FINAL + "ok")
+    assistente.perguntar("a", "s1")
+    assistente.perguntar("b", "s1")
+    assert "Observation: Atraso: 22 dias" in llm.prompts[2]
+
+
+def test_valor_inventado_gera_nova_tentativa():
+    assistente, _ = criar(FINAL + "R$ 1.236,00", USAR_TOOL, FINAL + "R$ 1.232,80")
+    assert assistente.perguntar("Quanto devo?", "s1").texto == "R$ 1.232,80"
+
+
+def test_valor_inventado_persistente_vira_erro_e_nao_entra_na_memoria():
+    assistente, llm = criar(FINAL + "R$ 1.236,00", FINAL + "R$ 1.236,00", FINAL + "ok")
+    with pytest.raises(ErroAssistente, match="confirmar"):
+        assistente.perguntar("Quanto devo?", "s1")
+    assistente.perguntar("oi", "s1")
+    assert "1.236,00" not in llm.prompts[2]
+
+
+def test_valor_do_usuario_e_aceito():
+    assistente, _ = criar(FINAL + "Quando venceu a conta de R$ 1.200,00?")
+    assert "1.200,00" in assistente.perguntar("Tenho uma conta de 1200 reais", "s1").texto
+
+
+def test_numero_enorme_na_pergunta_nao_quebra():
+    assistente, _ = criar(FINAL + "Valor acima do limite.")
+    assert assistente.perguntar("Corrija R$ 999.999.999.999,00", "s1").texto
