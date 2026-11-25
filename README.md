@@ -2,6 +2,8 @@
 
 Agente ReAct em LangChain que responde dúvidas financeiras com dados oficiais e cálculos feitos por ferramentas.
 
+**Repositório:** <https://github.com/lxbraga/assistente-financeiro-mei>
+
 ## Problema e solução
 
 **Problema:** o MEI precisa conferir fornecedores, calcular atrasos, prazos e correções, consultando vários sites e fazendo contas à mão. Um LLM sozinho inventaria números e não tem dados atuais.
